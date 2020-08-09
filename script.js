@@ -15,5 +15,14 @@ async function selectMediaStream() {
     }
 }
 
+togglePipButton.addEventListener('click', async () => {
+    // Disable button
+    togglePipButton.disabled = true;
+    // Start picture in picture
+    await videoElement.requestPictureInPicture();
+    // Reset button
+    togglePipButton.disabled = false;
+});
+
 // On load
 selectMediaStream();
