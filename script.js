@@ -1,5 +1,8 @@
 const videoElement = document.getElementById('video');
 const togglePipButton = document.getElementById('button');
+const webCam = document.getElementById('web-cam');
+const stopButton = document.getElementById('stop');
+const video = document.createElement('video');
 
 // Prompt to select media stream, pass to video element, then play
 async function selectMediaStream() {
@@ -15,6 +18,15 @@ async function selectMediaStream() {
     }
 }
 
+webCam.addEventListener('click', async () => {
+    video.srcObject = await navigator.mediaDevices.getUserMedia({ video: true });
+    video.play();
+    video.addEventListener('loadedmetadata', () => {
+    video.requestPictureInPicture()
+    .catch(console.error)
+      });
+    });
+
 togglePipButton.addEventListener('click', async () => {
     // Disable button
     togglePipButton.disabled = true;
@@ -23,6 +35,5 @@ togglePipButton.addEventListener('click', async () => {
     // Reset button
     togglePipButton.disabled = false;
 });
-
 // On load
 selectMediaStream();
